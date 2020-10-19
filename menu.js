@@ -9,9 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		let currentValue = document.querySelector(`#${input.id}-value`)
 		//update initial values
-		currentValue.textContent = currentInput.value;
-		updatedValues[currentInput.id] = currentInput.value;
-
+		
+		updatedValues[currentInput.id] = parseInt(currentInput.min) + Math.floor((parseInt(currentInput.max)-parseInt(currentInput.min)) * Math.random());
+		currentValue.textContent = updatedValues[currentInput.id]
+		currentInput.value = updatedValues[currentInput.id]
+		
+		//offset is a float number so must be setted manually
+		if(currentInput.id == "offset"){
+			currentValue.textContent = -1.0
+			currentInput.value = -1.0
+		}
 
 		var listener = () => {
 			window.requestAnimationFrame(() => {

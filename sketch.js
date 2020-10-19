@@ -34,7 +34,6 @@ class Circle{
 			translateWidth = mouseX
 			translateHeight = mouseY
 		}
-		console.log(mouseX, mouseY, staticCircle.center.x, staticCircle.center.y, d);
 	}
 }
 
@@ -45,6 +44,7 @@ let BASE_VEL = -(R - r) / r
 let perimeter = 200
 
 let t = 1
+let zoom = 1;
 let currentPoints = []
 let currentColor = "#00ff406f"
 let savedForms = [{ points: [], color: "" }]
@@ -63,12 +63,20 @@ function setup() {
 }
 function mouseDragged() {
 	staticCircle.translateCircle()
-	
-	
-
 }
+
+function mouseWheel(event) {
+	print(zoom)
+	
+	//change the zoom +- 0.05 per scroll
+	zoom = Math.abs(zoom+((event.delta/Math.abs(event.delta))*0.05))
+	
+	//uncomment to block page scrolling
+	return false;
+  }
 function draw() {
 	translate(translateWidth, translateHeight)
+	scale(zoom)
 	//update values read from rangeSliders
 	R = updatedValues.staticCircle
 	r = updatedValues.dynamicCircle
