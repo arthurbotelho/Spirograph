@@ -28,6 +28,14 @@ class Circle{
 		circle(this.center.x, this.center.y, this.radius)
 		pop()
 	}
+	translateCircle(){
+		let d = ceil(dist(translateWidth-mouseX, translateHeight-mouseY, staticCircle.center.x, staticCircle.center.y))
+		if(d <= staticCircle.radius){
+			translateWidth = mouseX
+			translateHeight = mouseY
+		}
+		console.log(mouseX, mouseY, staticCircle.center.x, staticCircle.center.y, d);
+	}
 }
 
 let R = 200
@@ -40,20 +48,27 @@ let t = 1
 let currentPoints = []
 let currentColor = "#00ff406f"
 let savedForms = [{ points: [], color: "" }]
-
-var staticCircle = new Circle()
+let translateWidth, translateHeight
+var staticCircle = new Circle({x:0,y:0}, R, "#ff354570")
 var orbitCircle = new Circle()
 var penCircle = new Circle({x:0,y:0}, 2)
 
 function setup() {
 	createCanvas(windowWidth, windowHeight)
 	frameRate(30)
+	translateWidth = width/2
+	translateHeight = height/2
 	ellipseMode(RADIUS)
-}
 
-function draw() {
-	translate(width / 2, height / 2)
+}
+function mouseDragged() {
+	staticCircle.translateCircle()
 	
+	
+
+}
+function draw() {
+	translate(translateWidth, translateHeight)
 	//update values read from rangeSliders
 	R = updatedValues.staticCircle
 	r = updatedValues.dynamicCircle
