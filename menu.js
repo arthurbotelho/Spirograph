@@ -1,0 +1,123 @@
+var ranges
+var updatedValues = {}
+
+document.addEventListener("DOMContentLoaded", () => {
+	ranges = document.querySelectorAll("input[type=range]")
+	ranges.forEach((input) => {
+
+		var currentInput = input
+
+		let currentValue = document.querySelector(`#${input.id}-value`)
+		//update initial values
+		currentValue.textContent = currentInput.value;
+		updatedValues[currentInput.id] = currentInput.value;
+
+
+		var listener = () => {
+			window.requestAnimationFrame(() => {
+				//value
+				currentValue.textContent = currentInput.value;
+				updatedValues[currentInput.id] = currentInput.value;
+
+
+			});
+		};
+
+		currentInput.addEventListener("mousedown", () => {
+			listener();
+			currentInput.addEventListener("mousemove", listener);
+		});
+
+		currentInput.addEventListener("mouseup", () => {
+			currentInput.removeEventListener("mousemove", listener);
+		});
+
+		currentInput.addEventListener("keydown", listener);
+	})
+
+	let newRanges = {}
+	ranges.forEach((input) => {
+		newRanges[input.id] = input
+	})
+	ranges = newRanges
+});
+
+
+
+function saveForm() {
+	let newform = { points: [], color: currentColor }
+	for (let i = 0; i < currentPoints.length; i++) {
+		newform.points.unshift({ x: currentPoints[i].x, y: currentPoints[i].y })
+	}
+	console.log(newform)
+	savedForms.push(newform)
+}
+
+function saveSvg() {
+	let svgpath = ""
+
+	let { x, y } = currentPoints[0];
+	let strokeWidth = 1
+	let xmin = 2000, ymin = 2000, xmax = -2000, ymax = -2000;
+
+	//currentPoints
+	svgpath = `<path stroke="${currentColor}" stroke-width="${strokeWidth}" fill="none" d="M ${x.toFixed(4)} ${y.toFixed(4)}`
+	for (let i = 1; i < currentPoints.length; i++) {
+		let { x, y } = currentPoints[i]
+		xmin = x < xmin ? x : xmin;
+		ymin = y < ymin ? y : ymin;
+		xmax = x > xmax ? x : xmax;
+		ymax = y > ymax ? y : ymax;
+
+		svgpath += `L ${(x).toFixed(4)} ${(y).toFixed(4)}`
+	}
+	svgpath += `" />`
+
+	savedForms.forEach(saved => {
+		let newSvgPath = ""
+		let { color, points: cPoints } = saved
+		
+		if (cPoints.length > 0) {
+			console.log(savedForms);
+			newSvgPath = `<path stroke="${color}" stroke-width="${strokeWidth}" fill="none" 
+				d="M ${cPoints[0].x.toFixed(4)} ${cPoints[0].y.toFixed(4)} `
+			for (let i = 1; i < cPoints.length; i++) {
+				let { x, y } = cPoints[i]
+				xmin = x < xmin ? x : xmin;
+				ymin = y < ymin ? y : ymin;
+				xmax = x > xmax ? x : xmax;
+				ymax = y > ymax ? y : ymax;
+
+				newSvgPath += `L ${(x).toFixed(4)} ${(y).toFixed(4)}`
+			}
+			newSvgPath += `" />`
+			svgpath += newSvgPath
+		}
+	})
+
+	let vbWidth = ceil(xmax - xmin) + 4 * strokeWidth,
+		vbHeight = ceil(ymax - ymin) + 4 * strokeWidth
+
+	let header = `<?xml version="1.0" encoding="utf-8"?>
+					<svg width="${vbWidth}" height="${vbHeight}"
+					viewBox="${-vbWidth / 2} ${-vbHeight / 2} ${vbWidth} ${vbHeight}">`
+
+	let closing = `</svg>`
+	var blob = new Blob([header, svgpath, closing], { type: "image/svg+xml" })
+	//saveAs.saveAs(blob, "spirograph.svg")
+	saveIMG("spirograph.svg", blob)
+}
+const saveIMG = function (filename, data) {
+	var blob = data
+	if (window.navigator.msSaveOrOpenBlob) {
+		window.navigator.msSaveBlob(blob, filename);
+	}
+	else {
+		var elem = window.document.createElement('a');
+		elem.href = window.URL.createObjectURL(blob);
+		elem.download = filename;
+		document.body.appendChild(elem);
+		elem.click();
+		document.body.removeChild(elem);
+	}
+}
