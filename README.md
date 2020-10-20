@@ -1,8 +1,10 @@
 # Spirograph
-Polar Roses Using Spirographs
----
+##Polar Roses Using Spirographs
+
 Inspired by [Coding Train][1] Video about Fractral Spirographs.\
 This [Wikipedia][2] article covers up the mathematical background
+Developed using [P5.js][3] 
+
 \
 \
 **Spirograph in a nutshell**: is a instrument made up of 2 circles.\
@@ -16,3 +18,4 @@ will form a Rose.
 
 [1]: https://thecodingtrain.com/CodingChallenges/061-fractal-spirograph.html
 [2]: https://en.wikipedia.org/wiki/Spirograph
+[3]: https://p5js.org/
