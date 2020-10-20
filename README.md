@@ -17,6 +17,9 @@ will form a Rose.
 
 ## Executing
 > Serve index.html with [**http-server**][4] to see the project running
+```javascript
+http-serve -c-1 .
+```
 
 [1]: https://thecodingtrain.com/CodingChallenges/061-fractal-spirograph.html
 [2]: https://en.wikipedia.org/wiki/Spirograph
