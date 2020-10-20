@@ -85,7 +85,7 @@ function draw() {
 	perimeter = updatedValues.perimeter
 	BASE_VEL = -(R - r) / r
 	//todo Colorpicker
-	
+	 
 	staticCircle.updateRadius(R)
 	orbitCircle.updateRadius(r)
 
