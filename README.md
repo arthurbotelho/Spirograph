@@ -2,7 +2,7 @@
 ##Polar Roses Using Spirographs
 
 Inspired by [Coding Train][1] Video about Fractral Spirographs.\
-This [Wikipedia][2] article covers up the mathematical background
+This [Wikipedia][2] article covers up the mathematical background\
 Developed using [P5.js][3] 
 
 \
