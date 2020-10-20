@@ -15,8 +15,14 @@ will form a Rose.
 <img id="spirograph-img" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Spiograph_Animation.gif" width="300" alt="Basic concept af a Spirograph">\
 <label for="spirograph-img">Basic Movement</label>
 
+
+
+
+
+
+
 ## Executing
-> Serve index.html with [**http-server**][4] to see the project running
+Serve index.html with [**http-server**][4] to see the project running following command from root folder: 
 ```javascript
 http-serve -c-1 .
 ```
