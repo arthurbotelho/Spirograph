@@ -4,9 +4,7 @@ var updatedValues = {}
 document.addEventListener("DOMContentLoaded", () => {
 	ranges = document.querySelectorAll("input[type=range]")
 	ranges.forEach((input) => {
-
 		var currentInput = input
-
 		let currentValue = document.querySelector(`#${input.id}-value`)
 		//update initial values
 
@@ -47,6 +45,17 @@ document.addEventListener("DOMContentLoaded", () => {
 		newRanges[input.id] = input
 	})
 	ranges = newRanges
+
+
+	//select color picker
+	let colorPicker = document.querySelector("#path-color")
+	colorPicker.value = "#10ff5a"
+	updatedValues.color = colorPicker.value
+	colorPicker.addEventListener("change", (event)=>{
+		updatedValues = {...updatedValues, 'color': event.target.value }
+	})
+
+
 });
 
 
@@ -56,10 +65,11 @@ function saveForm() {
 	for (let i = 0; i < currentPoints.length; i++) {
 		newform.points.unshift({ x: currentPoints[i].x, y: currentPoints[i].y })
 	}
-	console.log(newform)
 	savedForms.push(newform)
 }
-
+function clearFormStack(){
+	savedForms.pop()
+}
 function saveSvg() {
 	let svgpath = ""
 

@@ -46,8 +46,10 @@ let perimeter = 200
 let t = 1
 let zoom = 1;
 let currentPoints = []
+
 let currentColor = "#00ff406f"
 let savedForms = [{ points: [], color: "" }]
+
 let translateWidth, translateHeight
 var staticCircle = new Circle({x:0,y:0}, R, "#ff354570")
 var orbitCircle = new Circle()
@@ -84,7 +86,8 @@ function draw() {
 	speed = updatedValues.speed
 	perimeter = updatedValues.perimeter
 	BASE_VEL = -(R - r) / r
-	//todo Colorpicker
+	currentColor = updatedValues.color+"90"
+	
 	 
 	staticCircle.updateRadius(R)
 	orbitCircle.updateRadius(r)

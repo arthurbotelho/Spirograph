@@ -60,4 +60,9 @@ button[id="export-svg-btn"]{
 	position: absolute;
 	bottom: 0;
 }
-
+#path-color{
+	margin: 0 auto;
+	width: 99%;
+	height: 30px;
+	
+}
