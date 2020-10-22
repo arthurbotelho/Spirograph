@@ -55,14 +55,14 @@ var staticCircle = new Circle({x:0,y:0}, R, "#ff354570")
 var orbitCircle = new Circle()
 var penCircle = new Circle({x:0,y:0}, 2)
 
-function setup() {
+function setup(){
 	createCanvas(windowWidth, windowHeight)
 	frameRate(30)
 	translateWidth = width/2
 	translateHeight = height/2
 	ellipseMode(RADIUS)
-
 }
+
 function mouseDragged() {
 	staticCircle.translateCircle()
 }
