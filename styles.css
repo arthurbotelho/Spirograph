@@ -19,9 +19,11 @@ main{
 	top: 0;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	background-color: #ffffff30;
 	border-radius: .5rem;
 }
+
 .side-menu h2{
 	margin: 1rem 0 ;
 	font-size: 1.3rem;
@@ -29,7 +31,14 @@ main{
 	color: whitesmoke;
 	font-weight: lighter;
 }
+.side-menu img{
+	position: absolute;
+	top: .7rem;
+	left: 4.5rem;
+	width: 40px;
+}
 .slider-wrapper{
+	width: 100%;
 	display: flex;
 	flex-flow: column nowrap;
 
@@ -45,4 +54,10 @@ main{
 button{
 	margin: .5rem;
 	height: 2rem;
+	width: 90%
 }
+button[id="export-svg-btn"]{
+	position: absolute;
+	bottom: 0;
+}
+

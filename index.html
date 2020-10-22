@@ -16,12 +16,14 @@
 	<script src="p5-files/p5.js"></script>
 	<!--<script src="../addons/p5.sound.min.js"></script>-->
 	<script src="sketch.js"></script>
+	<link rel="icon" href="./ico.svg">
 </head>
 
 <body>
 	<main>
 		<nav class="side-menu">
-			<h2>MENU</h2>
+			<img src="./ico.svg" alt="SVG ICON">
+			<h2> MENU</h2>
 			<div class="slider-wrapper">
 				<label for="staticCircle">Circulo fixo: <span id="staticCircle-value">0</span></label>
 				<input type="range" min="0" max="400" value="200" class="slider" id="staticCircle">
@@ -49,8 +51,8 @@
 				<label for="offset">Offset: <span id="offset-value">0</span></label>
 				<input type="range" min="-1" max="1" step="0.1" value="1" class="slider" id="offset">
 			</div>
-			<button onclick={saveSvg()} >Exportar SVG</button>
-			<button onclick={saveForm()} >Salvar Forma</button>
+			<button id="memoize-form-btn" onclick={saveForm()} >Memorizar Forma</button>
+			<button id="export-svg-btn"onclick={saveSvg()} >Exportar SVG</button>
 
 		</nav>
 

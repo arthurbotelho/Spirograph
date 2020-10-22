@@ -30,7 +30,7 @@ class Circle{
 	}
 	translateCircle(){
 		let d = ceil(dist(translateWidth-mouseX, translateHeight-mouseY, staticCircle.center.x, staticCircle.center.y))
-		if(d <= staticCircle.radius){
+		if(d <= (staticCircle.radius*zoom)){
 			translateWidth = mouseX
 			translateHeight = mouseY
 		}
