@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		let currentValue = document.querySelector(`#${input.id}-value`)
 		//update initial values
 
-		updatedValues[currentInput.id] = parseInt(currentInput.min) + Math.floor((parseInt(currentInput.max) - parseInt(currentInput.min)) * Math.random());
+		updatedValues[currentInput.id] = parseInt(currentInput.min) + Math.floor((parseInt(currentInput.max) - parseInt(currentInput.min)) * Math.random())
 		currentValue.textContent = updatedValues[currentInput.id]
 		currentInput.value = updatedValues[currentInput.id]
 
@@ -21,23 +21,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		var listener = () => {
 			window.requestAnimationFrame(() => {
 				//value
-				currentValue.textContent = currentInput.value;
-				updatedValues[currentInput.id] = currentInput.value;
-
-
-			});
-		};
+				currentValue.textContent = currentInput.value
+				updatedValues[currentInput.id] = currentInput.value
+			})
+		}
 
 		currentInput.addEventListener("mousedown", () => {
-			listener();
-			currentInput.addEventListener("mousemove", listener);
-		});
+			listener()
+			currentInput.addEventListener("mousemove", listener)
+		})
 
 		currentInput.addEventListener("mouseup", () => {
-			currentInput.removeEventListener("mousemove", listener);
-		});
+			currentInput.removeEventListener("mousemove", listener)
+		})
 
-		currentInput.addEventListener("keydown", listener);
+		currentInput.addEventListener("keydown", listener)
 	})
 
 	let newRanges = {}
@@ -73,9 +71,9 @@ function clearFormStack(){
 function saveSvg() {
 	let svgpath = ""
 
-	let { x, y } = currentPoints[0];
+	let { x, y } = currentPoints[0]
 	let strokeWidth = 1
-	let xmin = 2000, ymin = 2000, xmax = -2000, ymax = -2000;
+	let xmin = 2000, ymin = 2000, xmax = -2000, ymax = -2000
 
 	//currentPoints
 	svgpath = `<path stroke="${currentColor}" stroke-width="${strokeWidth}" fill="none" d="M ${x.toFixed(4)} ${y.toFixed(4)}`
@@ -86,7 +84,7 @@ function saveSvg() {
 		xmax = x > xmax ? x : xmax;
 		ymax = y > ymax ? y : ymax;
 
-		svgpath += `L ${(x).toFixed(4)} ${(y).toFixed(4)}`
+		svgpath += `L ${(x).toFixed(4)} ${(y).toFixed(4)} `
 	}
 	svgpath += `" />`
 
@@ -100,12 +98,12 @@ function saveSvg() {
 				d="M ${cPoints[0].x.toFixed(4)} ${cPoints[0].y.toFixed(4)} `
 			for (let i = 1; i < cPoints.length; i++) {
 				let { x, y } = cPoints[i]
-				xmin = x < xmin ? x : xmin;
-				ymin = y < ymin ? y : ymin;
-				xmax = x > xmax ? x : xmax;
-				ymax = y > ymax ? y : ymax;
+				xmin = x < xmin ? x : xmin
+				ymin = y < ymin ? y : ymin
+				xmax = x > xmax ? x : xmax
+				ymax = y > ymax ? y : ymax
 
-				newSvgPath += `L ${(x).toFixed(4)} ${(y).toFixed(4)}`
+				newSvgPath += `L ${(x).toFixed(4)} ${(y).toFixed(4)} `
 			}
 			newSvgPath += `" />`
 			svgpath += newSvgPath
@@ -115,7 +113,8 @@ function saveSvg() {
 	let vbWidth = ceil(xmax - xmin) + 4 * strokeWidth,
 		vbHeight = ceil(ymax - ymin) + 4 * strokeWidth
 
-	let author = `<!-- 	author: Arthur Botelho
+	let author = `<!--
+		author: Arthur Botelho
 		github: https://github.com/arthurbotelho/Spirograph
 		-->`
 	let header = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -129,14 +128,14 @@ function saveSvg() {
 const saveIMG = function (filename, data) {
 	var blob = data
 	if (window.navigator.msSaveOrOpenBlob) {
-		window.navigator.msSaveBlob(blob, filename);
+		window.navigator.msSaveBlob(blob, filename)
 	}
 	else {
-		var elem = window.document.createElement('a');
-		elem.href = window.URL.createObjectURL(blob);
-		elem.download = filename;
-		document.body.appendChild(elem);
-		elem.click();
-		document.body.removeChild(elem);
+		var elem = window.document.createElement('a')
+		elem.href = window.URL.createObjectURL(blob)
+		elem.download = filename
+		document.body.appendChild(elem)
+		elem.click()
+		document.body.removeChild(elem)
 	}
 }

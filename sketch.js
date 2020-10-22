@@ -87,7 +87,6 @@ function draw() {
 	perimeter = updatedValues.perimeter
 	BASE_VEL = -(R - r) / r
 	currentColor = updatedValues.color+"90"
-	
 	 
 	staticCircle.updateRadius(R)
 	orbitCircle.updateRadius(r)
@@ -116,7 +115,7 @@ function draw() {
 
 		//Endpoint from where the line will be drawn
 		let p = { x: 0, y: 0 };
-		let noff = updatedValues.offset
+		let noff = parseFloat(updatedValues.offset)
 		p.x = rx + ((r  * pen / 100) * Math.cos(t * (BASE_VEL*noff)))
 		p.y = ry + ((r  * pen / 100) * Math.sin(t * (BASE_VEL*noff)))
 		penCircle.updatePosition(p)
