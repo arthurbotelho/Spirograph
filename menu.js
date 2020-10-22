@@ -105,8 +105,7 @@ function saveSvg() {
 	let vbWidth = ceil(xmax - xmin) + 4 * strokeWidth,
 		vbHeight = ceil(ymax - ymin) + 4 * strokeWidth
 
-	let header = `<?xml version="1.0" encoding="utf-8"?>
-					<svg width="${vbWidth}" height="${vbHeight}"
+	let header = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 					viewBox="${-vbWidth / 2} ${-vbHeight / 2} ${vbWidth} ${vbHeight}">`
 
 	let closing = `</svg>`
