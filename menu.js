@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		let currentValue = document.querySelector(`#${input.id}-value`)
 		//update initial values
-		
-		updatedValues[currentInput.id] = parseInt(currentInput.min) + Math.floor((parseInt(currentInput.max)-parseInt(currentInput.min)) * Math.random());
+
+		updatedValues[currentInput.id] = parseInt(currentInput.min) + Math.floor((parseInt(currentInput.max) - parseInt(currentInput.min)) * Math.random());
 		currentValue.textContent = updatedValues[currentInput.id]
 		currentInput.value = updatedValues[currentInput.id]
-		
+
 		//offset is a float number so must be setted manually
-		if(currentInput.id == "offset"){
+		if (currentInput.id == "offset") {
 			currentValue.textContent = -1.0
 			currentInput.value = -1.0
 		}
@@ -83,7 +83,7 @@ function saveSvg() {
 	savedForms.forEach(saved => {
 		let newSvgPath = ""
 		let { color, points: cPoints } = saved
-		
+
 		if (cPoints.length > 0) {
 			console.log(savedForms);
 			newSvgPath = `<path stroke="${color}" stroke-width="${strokeWidth}" fill="none" 
@@ -105,11 +105,14 @@ function saveSvg() {
 	let vbWidth = ceil(xmax - xmin) + 4 * strokeWidth,
 		vbHeight = ceil(ymax - ymin) + 4 * strokeWidth
 
+	let author = `<!-- 	author: Arthur Botelho
+		github: https://github.com/arthurbotelho/Spirograph
+		-->`
 	let header = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 					viewBox="${-vbWidth / 2} ${-vbHeight / 2} ${vbWidth} ${vbHeight}">`
 
 	let closing = `</svg>`
-	var blob = new Blob([header, svgpath, closing], { type: "image/svg+xml" })
+	var blob = new Blob([author, header, svgpath, closing], { type: "image/svg+xml" })
 	//saveAs.saveAs(blob, "spirograph.svg")
 	saveIMG("spirograph.svg", blob)
 }
