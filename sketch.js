@@ -1,20 +1,24 @@
-class Circle{
-	constructor(center = {x: 0, y :0}, radius = 10, color = "#ffffff50" ) {
+class Circle {
+	constructor(center = { x: 0, y: 0 }, radius = 10, color = "#ffffff50") {
 		this.center = center
 		this.radius = radius
-		this.color = color 
+		this.color = color
 	}
 
-	updatePosition(newCenter){
+	updatePosition(newCenter) {
 		this.center = newCenter
 	}
 
-	updateRadius(newRadius){
+	updateRadius(newRadius) {
 		this.radius = newRadius
 	}
 
-	centerToPoint(destiny = {x: 0, y: 0}){
-		line(this.center.x,this.center.y, destiny.x, destiny.y)
+	centerToPoint(destiny = { x: 0, y: 0 }) {
+		
+		push()
+		stroke("#ffffff50")
+		line(this.center.x, this.center.y, destiny.x, destiny.y)
+		pop()
 	}
 
 	display() {
@@ -28,9 +32,9 @@ class Circle{
 		circle(this.center.x, this.center.y, this.radius)
 		pop()
 	}
-	translateCircle(){
-		let d = ceil(dist(translateWidth-mouseX, translateHeight-mouseY, staticCircle.center.x, staticCircle.center.y))
-		if(d <= (staticCircle.radius*zoom)){
+	translateCircle() {
+		let d = ceil(dist(translateWidth - mouseX, translateHeight - mouseY, staticCircle.center.x, staticCircle.center.y))
+		if (d <= (staticCircle.radius * zoom)) {
 			translateWidth = mouseX
 			translateHeight = mouseY
 		}
@@ -51,15 +55,15 @@ let currentColor = "#00ff406f"
 let savedForms = [{ points: [], color: "" }]
 
 let translateWidth, translateHeight
-var staticCircle = new Circle({x:0,y:0}, R, "#ff354570")
+var staticCircle = new Circle({ x: 0, y: 0 }, R, "#ff354570")
 var orbitCircle = new Circle()
-var penCircle = new Circle({x:0,y:0}, 2)
+var penCircle = new Circle({ x: 0, y: 0 }, 2)
 
-function setup(){
+function setup() {
 	createCanvas(windowWidth, windowHeight)
 	frameRate(30)
-	translateWidth = width/2
-	translateHeight = height/2
+	translateWidth = width / 2
+	translateHeight = height / 2
 	ellipseMode(RADIUS)
 }
 
@@ -68,15 +72,12 @@ function mouseDragged() {
 }
 
 function mouseWheel(event) {
-	print(zoom)
-	
 	//change the zoom +- 0.05 per scroll
-	zoom = Math.abs(zoom+((event.delta/Math.abs(event.delta))*0.05))
-	
+	zoom = Math.abs(zoom + ((event.delta / Math.abs(event.delta)) * 0.05))
 	//uncomment to block page scrolling
 	return false;
-  }
-function draw() {
+}
+function draw(){
 	translate(translateWidth, translateHeight)
 	scale(zoom)
 	//update values read from rangeSliders
@@ -85,75 +86,72 @@ function draw() {
 	pen = updatedValues.pen
 	speed = updatedValues.speed
 	perimeter = updatedValues.perimeter
+	let noff = updatedValues.offset
 	BASE_VEL = -(R - r) / r
-	currentColor = updatedValues.color+"90"
-	 
+	currentColor = updatedValues.color + "90"
+
 	staticCircle.updateRadius(R)
 	orbitCircle.updateRadius(r)
 
 	let fps = 0;
-	do{
+	do {
 		background("#000")
 		fps++
-		let delta = TWO_PI/100;
-		if(speed != 0)
+
+		//CALCULATIONS
+		let delta = TWO_PI / 100;
+		if (speed != 0)
 			t += delta
+		var rx = ((R - r) * Math.cos(t))
+		var ry = ((R - r) * Math.sin(t))
+		let p = { x: 0, y: 0 }
+		p.x = rx + ((r * pen / 100) * Math.cos(t * (BASE_VEL * noff)))
+		p.y = ry + ((r * pen / 100) * Math.sin(t * (BASE_VEL * noff)))
 
-
-		stroke("#ffffff50")
-		//Static Circle
-		staticCircle.display()
-
-		//Rotating Circle
-		//Center of rotating circle
-		var rx = ((R-r) * Math.cos(t))
-		var ry = ((R-r) * Math.sin(t))
-		orbitCircle.updatePosition({x: rx, y: ry})
-		orbitCircle.display()
-		orbitCircle.centerToPoint(staticCircle.center)
-
-
-		//Endpoint from where the line will be drawn
-		let p = {x: 0, y: 0}
-		let noff = parseFloat(updatedValues.offset)
-		p.x = rx + ((r  * pen / 100) * Math.cos(t * (BASE_VEL*noff)))
-		p.y = ry + ((r  * pen / 100) * Math.sin(t * (BASE_VEL*noff)))
-		penCircle.updatePosition(p)
-		if(speed != 0)
+		if (speed != 0)
 			currentPoints.unshift(p)
-			
-		//pen point
-		penCircle.display()
-		penCircle.centerToPoint(orbitCircle.center)
-		
+		if (updatedValues.visible) {
+			//DRAW
+			stroke("#ffffff50")
+			//Static Circle
+			staticCircle.display()
+
+			//Rotating Circle
+			//Center of rotating circle
+			orbitCircle.updatePosition({ x: rx, y: ry })
+			orbitCircle.display()
+			orbitCircle.centerToPoint(staticCircle.center)
+
+			//Endpoint from where the line will be drawn
+			//pen point
+			penCircle.updatePosition(p)
+			penCircle.display()
+			penCircle.centerToPoint(orbitCircle.center)
+		}
 		//delete points beyond perimeter
 		while (currentPoints.length > perimeter) currentPoints.pop()
-
-		
-			
-	}while(fps < speed)
+	} while (fps < speed)
 
 	printSavedForms()
 	printCurrent()
-
 }
 
 function printCurrent() {
 	push()
-		beginShape()
+	beginShape()
 
-		stroke(currentColor)
-		strokeWeight(2)	
-		noFill()
-		for (let i = 0; i < currentPoints.length; i++) {
-			vertex(currentPoints[i].x, currentPoints[i].y)
-		}
-		endShape(CLOSE)
+	stroke(currentColor)
+	strokeWeight(2)
+	noFill()
+	for (let i = 0; i < currentPoints.length; i++) {
+		vertex(currentPoints[i].x, currentPoints[i].y)
+	}
+	endShape()
 	pop()
 }
 
 function printSavedForms() {
-	
+
 	for (let forms = 0; forms < savedForms.length; forms++) {
 		let { points: cPoints, color } = savedForms[forms]
 		beginShape()
@@ -167,5 +165,6 @@ function printSavedForms() {
 	}
 
 }
+
 
 

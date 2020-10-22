@@ -22,8 +22,14 @@
 <body>
 	<main>
 		<nav class="side-menu">
-			<img src="./ico.svg" alt="SVG ICON">
-			<h2> MENU</h2>
+			<div class="header-wrapper">
+				<img src="./ico.svg" alt="SVG ICON">
+				<h2> MENU</h2>
+				<button id="switch-visibility">
+					<img src="assets/hide.svg" id="hide-icon">
+					<img src="assets/show.svg" id="show-icon">
+				</button>
+			</div>
 			<div class="slider-wrapper">
 				<label for="staticCircle">Circulo fixo: <span id="staticCircle-value">0</span></label>
 				<input type="range" min="0" max="400" value="200" class="slider" id="staticCircle">
@@ -55,12 +61,15 @@
 				<label for="path-color"> Selecione uma cor:</label>
 				<input type="color" name="path-color" id="path-color" value:"#40ff50">
 			</div>
-			<button id="memoize-form-btn" onclick={saveForm()} >Memorizar Forma</button>
-			<button id="clear-form-btn"onclick={clearFormStack()} >Apagar última forma</button>
-			<button id="export-svg-btn"onclick={saveSvg()} >Exportar SVG</button>
+			<button id="memoize-form-btn" onclick={saveForm()}>Memorizar Forma</button>
+			<button id="clear-form-btn" onclick={clearFormStack()}>Apagar última forma</button>
+			<button id="export-svg-btn" onclick={saveSvg()}>Exportar SVG</button>
 
 		</nav>
 	</main>
+	<div class="credits">
+		<a href="https://www.flaticon.com/br/autores/those-icons" title="Those Icons">Icons</a> from <a href="https://www.flaticon.com/br/" title="Flaticon"> flaticon</a>
+	</div>
 </body>
 
 </html>

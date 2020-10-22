@@ -14,8 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		//offset is a float number so must be setted manually
 		if (currentInput.id == "offset") {
-			currentValue.textContent = -1.0
-			currentInput.value = -1.0
+			currentValue.textContent = parseFloat(-1.0)
+			currentInput.value = parseFloat(-1.0)
+			updatedValues.offset = parseFloat(-1.0)
 		}
 
 		var listener = () => {
@@ -44,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	})
 	ranges = newRanges
 
-
 	//select color picker
 	let colorPicker = document.querySelector("#path-color")
 	colorPicker.value = "#10ff5a"
@@ -52,8 +52,24 @@ document.addEventListener("DOMContentLoaded", () => {
 	colorPicker.addEventListener("change", (event) => {
 		updatedValues = { ...updatedValues, 'color': event.target.value }
 	})
-
-
+	//select visible button
+	let visibilityBtn = document.querySelector("#switch-visibility")
+	//set default initial values
+	updatedValues.visible = true
+	let showIcon = document.querySelector("#show-icon")
+	let hideIcon = document.querySelector("#hide-icon")
+	showIcon.style.display = "initial"
+	hideIcon.style.display = "none"
+	visibilityBtn.addEventListener("click", () => {
+		updatedValues = { ...updatedValues, 'visible': !updatedValues.visible }
+		if(updatedValues.visible){
+			showIcon.style.display = "block"
+			hideIcon.style.display = "none"
+		}else{
+			showIcon.style.display = "none"
+			hideIcon.style.display = "block"
+		}
+	})
 });
 
 
