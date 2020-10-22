@@ -49,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	let colorPicker = document.querySelector("#path-color")
 	colorPicker.value = "#10ff5a"
 	updatedValues.color = colorPicker.value
-	colorPicker.addEventListener("change", (event)=>{
-		updatedValues = {...updatedValues, 'color': event.target.value }
+	colorPicker.addEventListener("change", (event) => {
+		updatedValues = { ...updatedValues, 'color': event.target.value }
 	})
 
 
@@ -65,29 +65,30 @@ function saveForm() {
 	}
 	savedForms.push(newform)
 }
-function clearFormStack(){
+function clearFormStack() {
 	savedForms.pop()
 }
 function saveSvg() {
 	let svgpath = ""
 
-	let { x, y } = currentPoints[0]
 	let strokeWidth = 1
 	let xmin = 2000, ymin = 2000, xmax = -2000, ymax = -2000
+	
+	if (currentPoints.length > 0) {
+		let { x, y } = currentPoints[0]
+		//currentPoints
+		svgpath = `<path stroke="${currentColor}" stroke-width="${strokeWidth}" fill="none" d="M ${x.toFixed(4)} ${y.toFixed(4)}`
+		for (let i = 1; i < currentPoints.length; i++) {
+			let { x, y } = currentPoints[i]
+			xmin = x < xmin ? x : xmin;
+			ymin = y < ymin ? y : ymin;
+			xmax = x > xmax ? x : xmax;
+			ymax = y > ymax ? y : ymax;
 
-	//currentPoints
-	svgpath = `<path stroke="${currentColor}" stroke-width="${strokeWidth}" fill="none" d="M ${x.toFixed(4)} ${y.toFixed(4)}`
-	for (let i = 1; i < currentPoints.length; i++) {
-		let { x, y } = currentPoints[i]
-		xmin = x < xmin ? x : xmin;
-		ymin = y < ymin ? y : ymin;
-		xmax = x > xmax ? x : xmax;
-		ymax = y > ymax ? y : ymax;
-
-		svgpath += `L ${(x).toFixed(4)} ${(y).toFixed(4)} `
+			svgpath += `L ${(x).toFixed(4)} ${(y).toFixed(4)} `
+		}
+		svgpath += `" />`
 	}
-	svgpath += `" />`
-
 	savedForms.forEach(saved => {
 		let newSvgPath = ""
 		let { color, points: cPoints } = saved

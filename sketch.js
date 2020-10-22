@@ -114,15 +114,14 @@ function draw() {
 
 
 		//Endpoint from where the line will be drawn
-		let p = { x: 0, y: 0 };
+		let p = {x: 0, y: 0}
 		let noff = parseFloat(updatedValues.offset)
 		p.x = rx + ((r  * pen / 100) * Math.cos(t * (BASE_VEL*noff)))
 		p.y = ry + ((r  * pen / 100) * Math.sin(t * (BASE_VEL*noff)))
 		penCircle.updatePosition(p)
 		if(speed != 0)
 			currentPoints.unshift(p)
-
-		
+			
 		//pen point
 		penCircle.display()
 		penCircle.centerToPoint(orbitCircle.center)
